@@ -1,0 +1,12 @@
+FROM ubuntu_base:18.04
+
+RUN apt-get install -y --no-install-recommends \
+    python3.6-dev python3.6-distutils &&\
+    curl https://bootstrap.pypa.io/get-pip.py | python3.6 &&\
+    ln -s /usr/bin/python3.6 /usr/bin/python &&\
+    mkdir /root/.pip
+
+ENV LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
+ENV PYTHONIOENCODING=utf-8
+
+COPY pip.conf /root/.pip/pip.conf
