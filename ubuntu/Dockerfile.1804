@@ -1,19 +1,16 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
+
+RUN rm -rf /etc/apt/sources.list 
 
 COPY sources.list /etc/apt/sources.list
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get clean &&\
     apt-get update  && \
     apt-get install -y --no-install-recommends --force-yes \
-        vim git build-essential cmake pkg-config tree tzdata\
         wget curl ca-certificates unzip autoconf libtool automake \
-        python python-pip python-dev python-setuptools
+        vim git build-essential cmake pkg-config tree software-properties-common
 
 ENV LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
-ENV PYTHONIOENCODING=utf-8
-
-RUN mkdir /root/.pip
-COPY pip.conf /root/.pip/pip.conf
 
 RUN echo 'Asia/Shanghai' >/etc/timezone && rm -rf /etc/localtime && \
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
